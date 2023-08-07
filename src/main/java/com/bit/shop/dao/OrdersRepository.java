@@ -3,6 +3,7 @@ package com.bit.shop.dao;
 import com.bit.shop.domain.Orders;
 import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.dto.OrdersDto;
+import com.bit.shop.sql.OrderSql;
 import com.bit.shop.util.ConnectionPool;
 
 import java.sql.Connection;
@@ -37,7 +38,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         Orders orders = null;
 
         try {
-            pstmt = con.prepareStatement("SELECT * FROM orders WHERE id = ?");
+            pstmt = con.prepareStatement(OrderSql.SELECT_BY_ID);
             pstmt.setLong(1, key.getId());
 
             rSet = pstmt.executeQuery();
@@ -68,7 +69,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         List<Orders> list = new ArrayList<>();
 
         try {
-            pstmt = con.prepareStatement("SELECT * FROM orders");
+            pstmt = con.prepareStatement(OrderSql.SELECT_ALL);
 
             rSet = pstmt.executeQuery();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -99,7 +100,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         List<Orders> list = new ArrayList<>();
 
         try {
-            pstmt = con.prepareStatement("SELECT * FROM orders WHERE member_id = ?");
+            pstmt = con.prepareStatement(OrderSql.SELECT_BY_MEMBER_ID);
             pstmt.setLong(1, memberId);
 
             rSet = pstmt.executeQuery();
@@ -131,7 +132,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         PreparedStatement pstmt = null;
 
         try {
-            pstmt = con.prepareStatement("INSERT INTO orders(member_id, status) VALUES (?, ?)");
+            pstmt = con.prepareStatement(OrderSql.INSERT);
             pstmt.setLong(1, orders.getMemberId());
             pstmt.setString(2, orders.getStatus());
             result = pstmt.executeUpdate();
@@ -156,7 +157,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
 
         try {
             String[] generalColumns = {"id"};
-            pstmt = con.prepareStatement("INSERT INTO orders(member_id, status) VALUES (?, ?)", generalColumns);
+            pstmt = con.prepareStatement(OrderSql.INSERT, generalColumns);
             pstmt.setLong(1, orders.getMemberId());
             pstmt.setString(2, orders.getStatus());
             result = pstmt.executeUpdate();
@@ -182,7 +183,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         Connection con = cp.getConnection();
         PreparedStatement pstmt = null;
         try {
-            pstmt = con.prepareStatement("DELETE FROM orders WHERE id = ?");
+            pstmt = con.prepareStatement(OrderSql.DELETE_BY_ID);
             pstmt.setLong(1, key.getId());
             result = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -200,7 +201,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         Connection con = cp.getConnection();
         PreparedStatement pstmt = null;
         try {
-            pstmt = con.prepareStatement("DELETE FROM orders");
+            pstmt = con.prepareStatement(OrderSql.DELETE_ALL);
             pstmt.executeUpdate();
 
         } catch (Exception e) {
@@ -218,7 +219,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         Connection con = cp.getConnection();
         PreparedStatement pstmt = null;
         try {
-            pstmt = con.prepareStatement("UPDATE orders SET member_id = ?, status = ? WHERE id = ?");
+            pstmt = con.prepareStatement(OrderSql.UPDATE_BY_ID);
             pstmt.setLong(1, orders.getMemberId());
             pstmt.setString(2, orders.getStatus());
             pstmt.setLong(3, orders.getKey().getId());
