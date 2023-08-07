@@ -10,14 +10,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDto {
+public class OrderCartDto {
     private int productQuantity;
     private Long productId;
     private Long memberId;
+    private CouponTypeDto couponTypeDto;
 
-    public CartDto(Cart cart) {
+    public OrderCartDto(Cart cart) {
         this.productQuantity = cart.getProductQuantity();
         this.productId = cart.getProductId();
         this.memberId = cart.getMemberId();
     }
+
 }

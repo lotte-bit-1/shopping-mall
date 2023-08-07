@@ -7,16 +7,19 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = false)
-public class ProductOrderDto {
+public class OrderProductDto {
     private long productId;
     private long orderId;
+    private long memberId;
     private long price;
     private long quantity;
+    private CouponTypeDto couponTypeDto;
 
-    public ProductOrderDto(ProductOrder productOrder) {
+    public OrderProductDto(ProductOrder productOrder) {
         this.productId = productOrder.getProductId();
         this.orderId = productOrder.getOrderId();
         this.quantity = productOrder.getQuantity();
         this.price = productOrder.getPrice();
     }
+
 }

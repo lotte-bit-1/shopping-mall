@@ -1,10 +1,8 @@
 package com.bit.shop.service;
 
-import com.bit.shop.domain.Cart;
-import com.bit.shop.domain.Orders;
-import com.bit.shop.domain.Product;
 import com.bit.shop.domain.keys.SingleKey;
-import com.bit.shop.dto.CartDto;
+import com.bit.shop.dto.OrderCartDto;
+import com.bit.shop.dto.OrderProductDto;
 import com.bit.shop.dto.OrdersDto;
 import com.bit.shop.dto.ProductDto;
 
@@ -28,10 +26,10 @@ public interface OrderService {
     public Long makeOrder(Long memberId) throws Exception;
 
     // 장바구니 주문
-    public Long orderCart(List<CartDto> cartDtoList) throws Exception;
+    public Long orderCart(List<OrderCartDto> orderCartDtoList) throws Exception;
 
     // 상품조회 주문
-    public Long orderProduct(ProductDto product, Long memberId) throws Exception;
+    public Long orderProduct(OrderProductDto orderProductDto) throws Exception;
 
     // 주문 취소
     public void cancelOrder(SingleKey<Long> key) throws Exception;

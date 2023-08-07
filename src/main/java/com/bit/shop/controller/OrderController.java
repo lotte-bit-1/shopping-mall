@@ -2,7 +2,8 @@ package com.bit.shop.controller;
 
 
 import com.bit.shop.domain.keys.SingleKey;
-import com.bit.shop.dto.CartDto;
+import com.bit.shop.dto.OrderCartDto;
+import com.bit.shop.dto.OrderProductDto;
 import com.bit.shop.dto.OrdersDto;
 import com.bit.shop.dto.ProductDto;
 import com.bit.shop.service.OrderService;
@@ -22,13 +23,13 @@ public class OrderController {
 
 
     // 카트에서 주문 -> 총 금액 반환
-    public Long orderCart(List<CartDto> carts) throws Exception {
+    public Long orderCart(List<OrderCartDto> carts) throws Exception {
         return orderService.orderCart(carts);
     }
 
     // 상품조회에서 주문 -> 총 금액 반환
-    public Long orderProduct(ProductDto productDto, Long memberId) throws Exception {
-        return orderService.orderProduct(productDto, memberId);
+    public Long orderProduct(OrderProductDto orderProductDto) throws Exception {
+        return orderService.orderProduct(orderProductDto);
     }
 
     // 주문 취소

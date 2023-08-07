@@ -1,6 +1,6 @@
 package com.bit.shop.service;
 
-import com.bit.shop.dto.CartDto;
+import com.bit.shop.dto.OrderCartDto;
 import com.bit.shop.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,10 +69,10 @@ class OrderServiceImplTest {
     @Test
     void orderCart() throws Exception {
 
-        List<CartDto> cartDtoList = new ArrayList<>();
+        List<OrderCartDto> orderCartDtoList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            cartDtoList.add(
-                    CartDto.builder()
+            orderCartDtoList.add(
+                    OrderCartDto.builder()
                             .productId(2L + i)
                             .productQuantity(2 + i)
                             .memberId(1L)
@@ -80,7 +80,7 @@ class OrderServiceImplTest {
             );
         }
 
-        log.info(String.valueOf(orderService.orderCart(cartDtoList)));
+        log.info(String.valueOf(orderService.orderCart(orderCartDtoList)));
     }
 
     @Test

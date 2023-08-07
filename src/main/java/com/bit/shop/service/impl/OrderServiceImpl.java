@@ -6,11 +6,10 @@ import com.bit.shop.dao.ProductRepository;
 import com.bit.shop.domain.Orders;
 import com.bit.shop.domain.ProductOrder;
 import com.bit.shop.domain.keys.SingleKey;
-import com.bit.shop.dto.CartDto;
-import com.bit.shop.dto.OrdersDto;
-import com.bit.shop.dto.ProductDto;
+import com.bit.shop.dto.*;
 import com.bit.shop.service.CouponService;
 import com.bit.shop.service.OrderService;
+import com.bit.shop.type.CouponPolicy;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,6 +87,8 @@ public class OrderServiceImpl implements OrderService {
                             .status("주문 취소")
                             .build()
             );
+        } else {
+            throw new Exception("주문 중인 정보가 없음");
         }
     }
 
@@ -102,13 +103,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long orderCart(List<CartDto> cartDtoList) throws Exception {
-        Long ordersId = makeOrder(cartDtoList.get(0).getMemberId());
+    public Long orderCart(List<OrderCartDto> orderCartDtoList) throws Exception {
+        Long ordersId = makeOrder(orderCartDtoList.get(0).getMemberId());
         Long totalPrice = 0L;
 
-        for (CartDto cart : cartDtoList) {
-            long price = productRepository.getById(new SingleKey<Long>(cart.getProductId())).get().getPrice();
-//            long price = 10L;
+        for (OrderCartDto cart : orderCartDtoList) {
+//            long price = productRepository.getById(new SingleKey<Long>(cart.getProductId())).get().getPrice();
+            long price = 10L;
+
+            // 쿠폰이 있을 시 할인적용
+            if (cart.getCouponTypeDto() != null) {
+                price = discount(price, cart.getCouponTypeDto());
+            }
+
             long productId = cart.getProductId();
             long quantity = cart.getProductQuantity();
 
@@ -127,10 +134,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long orderProduct(ProductDto product, Long memberId) throws Exception {
-        Long ordersId = makeOrder(memberId);
-        long price = product.getPrice();
-        long quantity = product.getQuantity();
+    public Long orderProduct(OrderProductDto orderProductDto) throws Exception {
+        Long ordersId = makeOrder(orderProductDto.getMemberId());
+        long price = orderProductDto.getPrice();
+        long quantity = orderProductDto.getQuantity();
+
+        // 쿠폰이 있을 시 할인적용
+        if (orderProductDto.getCouponTypeDto() != null) {
+            price = discount(price, orderProductDto.getCouponTypeDto());
+        }
 
         // Unique인 코드값으로 ID PK 조회
         productOrderRepository.insert(
@@ -143,6 +155,19 @@ public class OrderServiceImpl implements OrderService {
         );
 
         return price * quantity;
+    }
+
+    
+    // 쿠폰 할인
+    public Long discount(long price, CouponTypeDto couponTypeDto) {
+        // 쿠폰 타입이 %인지, 금액인지에 따라 할인
+        if (couponTypeDto.getDiscountPolicy().equals(CouponPolicy.PERCENT.toString())) {
+            price *= couponTypeDto.getDiscountValue();
+        } else {
+            price -= couponTypeDto.getDiscountValue();
+        }
+
+        return price > 0 ? price : 0;
     }
 
 }
