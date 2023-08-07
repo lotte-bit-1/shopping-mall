@@ -1,10 +1,10 @@
-package com.bit.shop.dao.cart;
+package com.bit.shop.cart;
 
 import com.bit.shop.dao.CartRepository;
 import com.bit.shop.domain.Cart;
 import org.junit.jupiter.api.*;
 
-public class CartUpdateTest {
+public class CartDeleteTest {
 
     private CartRepository cartRepository;
 
@@ -13,7 +13,7 @@ public class CartUpdateTest {
         cartRepository = new CartRepository();
         Cart cart1 = Cart.builder()
                 .memberId(TestProperties.memberKey.getId())
-                .productId(TestProperties.productKey.getId())
+                .productId(TestProperties.memberKey.getId())
                 .productQuantity(5)
                 .build();
         cartRepository.insert(cart1);
@@ -26,7 +26,7 @@ public class CartUpdateTest {
 
     @Test
     @DisplayName("장바구니에 있는 상품 수정")
-    void update() throws Exception {
+    void deleteAllByMemberId() throws Exception {
         // given
         Cart cart1 = Cart.builder()
                 .memberId(TestProperties.memberKey.getId())
@@ -35,8 +35,9 @@ public class CartUpdateTest {
                 .build();
 
         // when
-        cartRepository.update(cart1);
+        cartRepository.deleteAllByMemberKey(TestProperties.memberKey);
 
         // then
+        Assertions.assertEquals(0, cartRepository.getAllByMemberId(TestProperties.memberKey.getId()).size());
     }
 }

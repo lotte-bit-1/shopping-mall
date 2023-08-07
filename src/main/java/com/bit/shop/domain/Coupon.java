@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Coupon extends BaseEntity<SingleKey<Long>> {
+
     private Long memberId;
     private String name;
     private String discountPolicy;

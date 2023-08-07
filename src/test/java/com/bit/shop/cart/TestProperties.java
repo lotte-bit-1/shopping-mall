@@ -1,4 +1,4 @@
-package com.bit.shop.dao.cart;
+package com.bit.shop.cart;
 
 import com.bit.shop.domain.keys.SingleKey;
 

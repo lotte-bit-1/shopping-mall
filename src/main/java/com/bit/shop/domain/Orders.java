@@ -7,9 +7,9 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Getter
 @Builder
-@AllArgsConstructor
 public class Orders extends BaseEntity<SingleKey<Long>> {
 
     private Long userId;
