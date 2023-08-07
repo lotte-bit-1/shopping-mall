@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 public class Member extends BaseEntity<SingleKey<Long>> {
-    private Long id;
-    private String email;
-    private String password;
-    private String name;
+
+    private final String email;
+    private final String password;
+    private final String name;
 }

@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @RequiredArgsConstructor
 public class Orders extends BaseEntity<SingleKey<Long>> {
-    private Long id;
-    private Long userId;
-    private LocalDateTime regDate;
-    private String status;
+
+    private final Long userId;
+    private final LocalDateTime regDate;
+    private final String status;
 }
