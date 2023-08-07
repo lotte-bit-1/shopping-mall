@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface DaoFrame<K extends EntityKey, V extends BaseEntity<K>> {
 
+
   Optional<V> getById(K key) throws Exception;
   List<V> getAll() throws Exception;
   void insert(V object) throws Exception;
