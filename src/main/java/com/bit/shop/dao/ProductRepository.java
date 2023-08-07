@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,7 +58,8 @@ public class ProductRepository implements DaoFrame<SingleKey<Long>, Product> {
                         .name(rSet.getString("name"))
                         .price(rSet.getLong("price"))
                         .quantity(rSet.getInt("quantity"))
-                        .regDate(LocalDateTime.parse(rSet.getString("reg_date")))
+                        .regDate(LocalDateTime.parse(rSet.getString("reg_date"),
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .code(rSet.getString("code"))
                         .build());
             }
@@ -177,7 +179,7 @@ public class ProductRepository implements DaoFrame<SingleKey<Long>, Product> {
 
     }
 
-    public List<ProductResponseDto> getAllDto() {
+    public List<ProductResponseDto> getAllDtoByCategory(Long categoryId) {
         log.info("Selected ...");
         List<ProductResponseDto> list = new ArrayList<>();
 
@@ -187,8 +189,35 @@ public class ProductRepository implements DaoFrame<SingleKey<Long>, Product> {
         try {
 
             pstmt = con.prepareStatement(
-                "SELECT id, category_id, name, price, quantity, reg_date, code FROM product"
+                "WITH RECURSIVE cte AS (\n"
+                    + "    SELECT id\n"
+                    + "         , parent_id\n"
+                    + "    FROM category\n"
+                    + "    WHERE id = '3'\n"
+                    + "    UNION ALL\n"
+                    + "    SELECT c.id\n"
+                    + "         , c.parent_id\n"
+                    + "    FROM category c\n"
+                    + "         INNER JOIN cte\n"
+                    + "                    ON cte.id = c.parent_id\n"
+                    + ")\n"
+                    + "SELECT \n"
+                    + "\tp.id,\n"
+                    + "    p.category_id,\n"
+                    + "\tp.name,\n"
+                    + "    p.price, \n"
+                    + "    p.quantity,\n"
+                    + "    p.reg_date,\n"
+                    + "    p.code\n"
+                    + "FROM product p\n"
+                    + "WHERE p.id IN (\n"
+                    + "    SELECT p.id\n"
+                    + "    FROM cte\n"
+                    + "         INNER JOIN product p\n"
+                    + "                    ON p.category_id = cte.id\n"
+                    + ")"
             );
+
             rSet = pstmt.executeQuery();
 
             while (rSet.next()) {
