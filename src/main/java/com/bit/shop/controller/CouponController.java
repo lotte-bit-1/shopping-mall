@@ -3,7 +3,7 @@ package com.bit.shop.controller;
 import com.bit.shop.domain.Coupon;
 import com.bit.shop.dto.CouponTypeDto;
 import com.bit.shop.service.CouponService;
-import com.bit.shop.service.CouponServiceImpl;
+import com.bit.shop.service.impl.CouponServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;

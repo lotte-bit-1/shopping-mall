@@ -1,10 +1,5 @@
 package com.bit.shop.controller;
 
-import com.bit.shop.service.MemberService;
-import com.bit.shop.service.MemberServiceImpl;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 public class MemberController {
 
 //    private MemberService memberService;

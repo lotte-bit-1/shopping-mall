@@ -5,7 +5,7 @@ import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.dto.CartDto;
 import com.bit.shop.dto.ProductDto;
 import com.bit.shop.service.OrderService;
-import com.bit.shop.service.OrderServiceImpl;
+import com.bit.shop.service.impl.OrderServiceImpl;
 
 import java.util.List;
 import java.util.logging.Logger;

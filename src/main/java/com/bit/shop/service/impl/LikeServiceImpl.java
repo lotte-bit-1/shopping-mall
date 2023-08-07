@@ -1,4 +1,4 @@
-package com.bit.shop.service;
+package com.bit.shop.service.impl;
 
 import com.bit.shop.dao.LikesRepository;
 import com.bit.shop.domain.Likes;
@@ -6,6 +6,8 @@ import com.bit.shop.domain.keys.CompositeKey;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+
+import com.bit.shop.service.LikeService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

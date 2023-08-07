@@ -1,8 +1,9 @@
-package com.bit.shop.service;
+package com.bit.shop.service.impl;
 
 import com.bit.shop.dao.CartRepository;
 import com.bit.shop.domain.Cart;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.service.CartService;
 
 import java.util.List;
 import java.util.Optional;

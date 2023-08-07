@@ -1,4 +1,4 @@
-package com.bit.shop.service;
+package com.bit.shop.service.impl;
 
 import com.bit.shop.dao.MemberRepository;
 import com.bit.shop.domain.Member;
@@ -6,6 +6,8 @@ import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.dto.LoginMember;
 import com.bit.shop.dto.LoginRequestDto;
 import com.bit.shop.dto.MemberResponseDto;
+import com.bit.shop.service.MemberService;
+
 import java.util.List;
 
 public class MemberServiceImpl implements MemberService {

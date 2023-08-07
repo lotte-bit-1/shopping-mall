@@ -4,7 +4,7 @@ import com.bit.shop.dao.CouponRepository;
 import com.bit.shop.domain.Coupon;
 import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.service.CouponService;
-import com.bit.shop.service.CouponServiceImpl;
+import com.bit.shop.service.impl.CouponServiceImpl;
 import com.bit.shop.type.CouponPolicy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

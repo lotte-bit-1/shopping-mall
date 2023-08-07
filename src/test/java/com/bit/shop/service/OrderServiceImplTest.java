@@ -1,8 +1,7 @@
 package com.bit.shop.service;
 
-import com.bit.shop.domain.Orders;
 import com.bit.shop.dto.CartDto;
-import com.bit.shop.dto.OrdersDto;
+import com.bit.shop.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class OrderServiceImplTest {
 

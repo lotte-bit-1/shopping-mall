@@ -2,7 +2,7 @@ package com.bit.shop.member;
 
 import com.bit.shop.domain.Member;
 import com.bit.shop.service.MemberService;
-import com.bit.shop.service.MemberServiceImpl;
+import com.bit.shop.service.impl.MemberServiceImpl;
 import java.util.List;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
