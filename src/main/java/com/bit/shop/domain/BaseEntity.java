@@ -7,4 +7,8 @@ import lombok.Getter;
 @Getter
 public abstract class BaseEntity<KEY extends EntityKey> {
     protected KEY key;
+
+    public void setKey(KEY key) {
+        this.key = key;
+    }
 }
