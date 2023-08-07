@@ -36,7 +36,7 @@ public class MemberSelectTest {
 
         // then
         Assertions.assertEquals(email, member.getEmail());
-        
+
     }
 
 }
