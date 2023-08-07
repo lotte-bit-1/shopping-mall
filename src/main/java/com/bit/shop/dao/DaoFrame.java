@@ -2,7 +2,6 @@ package com.bit.shop.dao;
 
 import com.bit.shop.domain.BaseEntity;
 import com.bit.shop.domain.keys.EntityKey;
-
 import java.util.List;
 import java.util.Optional;
 

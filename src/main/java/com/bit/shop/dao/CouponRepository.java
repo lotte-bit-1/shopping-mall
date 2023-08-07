@@ -1,9 +1,6 @@
 package com.bit.shop.dao;
 
-import com.bit.shop.domain.BaseEntity;
-import com.bit.shop.domain.Cart;
 import com.bit.shop.domain.Coupon;
-import com.bit.shop.domain.keys.EntityKey;
 import com.bit.shop.domain.keys.SingleKey;
 import java.util.List;
 import java.util.Optional;
