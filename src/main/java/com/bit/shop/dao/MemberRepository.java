@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+
 public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
-    
+
     Logger log = Logger.getLogger("MemberDao");
-    
+
     ConnectionPool cp;
-    
+
     public MemberRepository() {
         try {
             cp = ConnectionPool.create();
@@ -26,23 +27,23 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public Optional<Member> getById(SingleKey<Long> key) {
 
-        log.info("Selected : "+key.getId());
+        log.info("Selected : " + key.getId());
 
         Connection connection = cp.getConnection();
         PreparedStatement pStmt = null;
         Member member = null;
         try {
             pStmt = connection.prepareStatement(
-              "SELECT id, email, password, name FROM cust WHERE id=?"
+                "SELECT id, email, password, name FROM cust WHERE id=?"
             );
             pStmt.setLong(1, key.getId());
             ResultSet rSet = pStmt.executeQuery();
 
-            if(rSet.next()) {
+            if (rSet.next()) {
 
                 member = Member.builder()
                     .email(rSet.getString("email"))
@@ -51,7 +52,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
                     .build();
             }
         } catch (Exception e) {
-                log.info(e.getMessage());
+            log.info(e.getMessage());
         } finally {
             cp.releaseConnection(connection);
             DaoFrame.close();
@@ -77,7 +78,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             );
             rSet = pstmt.executeQuery();
 
-            while(rSet.next()) {
+            while (rSet.next()) {
                 list.add(
                     Member.builder()
                         .email(rSet.getString("email"))
