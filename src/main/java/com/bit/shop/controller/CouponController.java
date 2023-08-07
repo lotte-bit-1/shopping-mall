@@ -28,7 +28,7 @@ public class CouponController {
         List<Coupon> my = new ArrayList<>();
         for (Coupon c :
                 allCoupon) {
-            if (c.getMemberId().equals(userId)) {
+            if (c.getMemberId().equals(userId) && !c.isUsed()) {
                 my.add(c);
             }
         }
