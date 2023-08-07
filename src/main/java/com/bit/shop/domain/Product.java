@@ -9,11 +9,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-<<<<<<< HEAD
-@RequiredArgsConstructor
-=======
 @Builder
->>>>>>> fb4a7286ed21c5391567e53eeb62164b85a714db
 public class Product extends BaseEntity<SingleKey<Long>> {
     private Long categoryId;
     private String name;
