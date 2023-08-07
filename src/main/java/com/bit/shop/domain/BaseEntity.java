@@ -2,6 +2,8 @@ package com.bit.shop.domain;
 
 
 import com.bit.shop.domain.keys.EntityKey;
+
+import java.util.Date;
 import lombok.Getter;
 
 @Getter

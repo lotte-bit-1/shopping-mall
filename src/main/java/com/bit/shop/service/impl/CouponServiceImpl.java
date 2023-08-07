@@ -1,8 +1,10 @@
-package com.bit.shop.service;
+package com.bit.shop.service.impl;
 
 import com.bit.shop.dao.CouponRepository;
 import com.bit.shop.domain.Coupon;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.service.CouponService;
+import com.bit.shop.type.CouponPolicy;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class CouponServiceImpl implements CouponService {
         repository.insert(Coupon.builder()
                 .name("welcome coupon")
                 .memberId(userId)
-                .discountPolicy("percent")
+                .discountPolicy(CouponPolicy.PERCENT.toString())
                 .discountValue(5)
                 .isUsed(false)
                 .build());
