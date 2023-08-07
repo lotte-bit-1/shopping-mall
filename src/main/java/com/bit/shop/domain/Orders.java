@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class Orders extends BaseEntity<SingleKey<Long>> {
 
-    private final Long userId;
+    private final Long memberId;
     private final LocalDateTime regDate;
     private final String status;
 }
