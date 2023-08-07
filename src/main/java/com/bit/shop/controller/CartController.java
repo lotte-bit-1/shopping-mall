@@ -19,27 +19,29 @@ public class CartController {
     private final CartService cartService;
 
     public void register(RegisterCartRequest cartRegisterRequest) {
-        if(cartRegisterRequest == null) {
-            throw new IllegalArgumentException("카트에 넣을 정보가 없습니다");
-        }
-        if(cartRegisterRequest.getMemberId() == null) {
-            throw new IllegalArgumentException("로그인이 필요한 서비스입니다");
-        }
-        if(cartRegisterRequest.getProductId() == null) {
-            throw new IllegalArgumentException("상품을 선택해주세요");
-        }
-        if(cartRegisterRequest.getProductQuantity() == 0) {
-            throw new IllegalArgumentException("상품 수량은 0보다 커야합니다");
-        }
-
-        Cart cart = Cart.builder()
-                .memberId(cartRegisterRequest.getMemberId())
-                .productId(cartRegisterRequest.getProductId())
-                .productQuantity(cartRegisterRequest.getProductQuantity())
-                .build();
-
         try {
+            if(cartRegisterRequest == null) {
+                throw new IllegalArgumentException("카트에 넣을 정보가 없습니다");
+            }
+            if(cartRegisterRequest.getMemberId() == null) {
+                throw new IllegalArgumentException("로그인이 필요한 서비스입니다");
+            }
+            if(cartRegisterRequest.getProductId() == null) {
+                throw new IllegalArgumentException("상품을 선택해주세요");
+            }
+            if(cartRegisterRequest.getProductQuantity() == 0) {
+                throw new IllegalArgumentException("상품 수량은 0보다 커야합니다");
+            }
+
+            Cart cart = Cart.builder()
+                    .memberId(cartRegisterRequest.getMemberId())
+                    .productId(cartRegisterRequest.getProductId())
+                    .productQuantity(cartRegisterRequest.getProductQuantity())
+                    .build();
+
             cartService.register(cart);
+        } catch(IllegalArgumentException e) {
+            log.info(e.getMessage());
         } catch(Exception e) {
             log.warning(e.getMessage());
         }
@@ -55,6 +57,8 @@ public class CartController {
             }
 
             cart = cartService.getById(id);
+        } catch(IllegalArgumentException e) {
+            log.info(e.getMessage());
         } catch (Exception e) {
             log.warning(e.getMessage());
         }
@@ -76,6 +80,8 @@ public class CartController {
             }
 
             carts = cartService.getAllByMemberId(memberId);
+        } catch(IllegalArgumentException e) {
+            log.info(e.getMessage());
         } catch (Exception e) {
             log.warning(e.getMessage());
         }
@@ -99,6 +105,8 @@ public class CartController {
             }
 
             cartService.modifyProductQuantityById(id, cartModifyRequestDto.getProductQuantity());
+        } catch(IllegalArgumentException e) {
+            log.info(e.getMessage());
         } catch (Exception e) {
             log.warning(e.getMessage());
         }
@@ -113,6 +121,8 @@ public class CartController {
             }
 
             cartService.remove(new SingleKey<>(id));
+        } catch(IllegalArgumentException e) {
+            log.info(e.getMessage());
         } catch (Exception e) {
             log.warning(e.getMessage());
         }
@@ -127,6 +137,8 @@ public class CartController {
             }
 
             cartService.removeAllByMemberId(memberId);
+        } catch(IllegalArgumentException e) {
+            log.info(e.getMessage());
         } catch (Exception e) {
             log.warning(e.getMessage());
         }
