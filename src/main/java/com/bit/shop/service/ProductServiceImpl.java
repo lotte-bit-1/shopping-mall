@@ -10,7 +10,7 @@ public class ProductServiceImpl implements ProductService {
 
     ProductRepository productRepository;
 
-    ProductServiceImpl() {
+    public ProductServiceImpl() {
         productRepository = new ProductRepository();
     }
 

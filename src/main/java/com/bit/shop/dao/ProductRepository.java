@@ -164,7 +164,7 @@ public class ProductRepository implements DaoFrame<SingleKey<Long>, Product> {
                     .name(rSet.getString("name"))
                     .price(rSet.getLong("price"))
                     .quantity(rSet.getInt("quantity"))
-                    .regDate(LocalDateTime.parse(rSet.getString("reg_date")))
+                    .regDate(LocalDateTime.parse(rSet.getString("reg_date"),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                     .code(rSet.getString("code"))
                     .build();
             }
@@ -193,7 +193,7 @@ public class ProductRepository implements DaoFrame<SingleKey<Long>, Product> {
                     + "    SELECT id\n"
                     + "         , parent_id\n"
                     + "    FROM category\n"
-                    + "    WHERE id = '3'\n"
+                    + "    WHERE id = ? \n"
                     + "    UNION ALL\n"
                     + "    SELECT c.id\n"
                     + "         , c.parent_id\n"
@@ -217,7 +217,7 @@ public class ProductRepository implements DaoFrame<SingleKey<Long>, Product> {
                     + "                    ON p.category_id = cte.id\n"
                     + ")"
             );
-
+            pstmt.setLong(1,categoryId);
             rSet = pstmt.executeQuery();
 
             while (rSet.next()) {
@@ -228,7 +228,7 @@ public class ProductRepository implements DaoFrame<SingleKey<Long>, Product> {
                         .name(rSet.getString("name"))
                         .price(rSet.getLong("price"))
                         .quantity(rSet.getInt("quantity"))
-                        .regDate(LocalDateTime.parse(rSet.getString("reg_date")))
+                        .regDate(LocalDateTime.parse(rSet.getString("reg_date"),DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                         .code(rSet.getString("code"))
                         .build());
             }
