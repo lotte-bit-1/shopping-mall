@@ -1,16 +1,16 @@
 package com.bit.shop.domain;
 
 import com.bit.shop.domain.keys.SingleKey;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Builder
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Category extends BaseEntity<SingleKey<Long>> {
 
-    private final String name;
-    private final int level;
+    private String name;
+    private int level;
     private Long parentId;
 }

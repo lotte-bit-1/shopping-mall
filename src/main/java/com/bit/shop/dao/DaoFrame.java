@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface DaoFrame<K extends EntityKey, V extends BaseEntity<K>> {
 
   Optional<V> getById(K key);
-  List<V> getAll();
-  void insert(V object);
+  List<V> getAll() throws Exception;
+  void insert(V object) throws Exception;
   void delete(K key);
   void update(V object);
 
