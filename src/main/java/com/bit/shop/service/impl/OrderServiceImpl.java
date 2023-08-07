@@ -9,6 +9,7 @@ import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.dto.CartDto;
 import com.bit.shop.dto.OrdersDto;
 import com.bit.shop.dto.ProductDto;
+import com.bit.shop.service.CouponService;
 import com.bit.shop.service.OrderService;
 
 import java.util.List;
@@ -20,11 +21,13 @@ public class OrderServiceImpl implements OrderService {
     OrdersRepository ordersRepository;
     ProductRepository productRepository;
     ProductOrderRepository productOrderRepository;
+    CouponService couponService;
 
     public OrderServiceImpl() {
         ordersRepository = new OrdersRepository();
         productRepository = new ProductRepository();
         productOrderRepository = new ProductOrderRepository();
+        couponService = new CouponServiceImpl();
     }
 
     @Override

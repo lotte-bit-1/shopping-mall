@@ -3,6 +3,7 @@ package com.bit.shop.controller;
 
 import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.dto.CartDto;
+import com.bit.shop.dto.OrdersDto;
 import com.bit.shop.dto.ProductDto;
 import com.bit.shop.service.OrderService;
 import com.bit.shop.service.impl.OrderServiceImpl;
@@ -33,6 +34,11 @@ public class OrderController {
     // 주문 취소
     public void orderCancel(Long orderId) throws Exception {
         orderService.remove(new SingleKey<Long>(orderId));
+    }
+
+    // 주문내역 조회
+    public List<OrdersDto> getMyOrderList(Long memberId) throws Exception {
+        return orderService.getMembersOrder(memberId);
     }
 
 }
