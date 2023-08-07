@@ -13,4 +13,16 @@ public interface DaoFrame<K extends EntityKey, V extends BaseEntity<K>> {
   void insert(V object);
   void delete(K key);
   void update(V object);
+
+  static void close(AutoCloseable ... autoCloseables) {
+    for(AutoCloseable autoCloseable : autoCloseables) {
+      if(autoCloseable != null) {
+        try {
+          autoCloseable.close();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 }
