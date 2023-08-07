@@ -1,6 +1,5 @@
-package com.bit.shop.domain;
+package com.bit.shop.dto;
 
-import com.bit.shop.domain.keys.SingleKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Coupon extends BaseEntity<SingleKey<Long>> {
+public class CouponDTO {
+    private Long id;
     private Long memberId;
     private String name;
     private String discountPolicy;

@@ -1,18 +1,18 @@
 package com.bit.shop.domain;
 
 import com.bit.shop.domain.keys.SingleKey;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Getter
 @Builder
-@RequiredArgsConstructor
 public class Orders extends BaseEntity<SingleKey<Long>> {
 
-    private final Long userId;
-    private final LocalDateTime regDate;
-    private final String status;
+    private Long userId;
+    private LocalDateTime regDate;
+    private String status;
 }
