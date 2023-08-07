@@ -103,3 +103,4 @@
 
 
 ## ERD
+![스크린샷 2023-08-07 오전 10 16 53](https://github.com/lotte-bit-1/shopping-mall/assets/55802893/e2cab8b3-8ec5-404e-8521-77523a45c53d)
