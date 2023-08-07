@@ -12,5 +12,5 @@ public class Category extends BaseEntity<SingleKey<Long>> {
 
     private final String name;
     private final int level;
-    private final Long parentId;
+    private Long parentId;
 }
