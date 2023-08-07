@@ -3,9 +3,9 @@ package com.bit.shop.domain;
 import com.bit.shop.domain.keys.SingleKey;
 import lombok.*;
 
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ProductOrder extends BaseEntity<SingleKey<Long>> {
     private long productId;

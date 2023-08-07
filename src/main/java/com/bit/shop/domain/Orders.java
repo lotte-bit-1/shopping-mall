@@ -5,10 +5,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Getter
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Orders extends BaseEntity<SingleKey<Long>> {
 
     private Long memberId;

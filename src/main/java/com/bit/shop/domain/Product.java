@@ -5,9 +5,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Product extends BaseEntity<SingleKey<Long>> {
     private Long categoryId;
