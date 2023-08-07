@@ -18,4 +18,5 @@ public class Product extends BaseEntity<SingleKey<Long>> {
     private LocalDateTime regDate;
     private String code;
 
+
 }
