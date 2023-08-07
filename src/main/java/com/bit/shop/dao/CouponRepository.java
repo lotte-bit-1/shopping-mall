@@ -61,10 +61,11 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
   @Override
   public void insert(Coupon coupon) throws Exception {
     try (PreparedStatement pstmt = connection.prepareStatement(CouponQuery.INSERT)) {
-      pstmt.setString(1, String.valueOf(coupon.getMemberId()));
+      pstmt.setLong(1, coupon.getMemberId());
       pstmt.setString(2, coupon.getName());
       pstmt.setString(3, coupon.getDiscountPolicy());
-      pstmt.setString(4, String.valueOf(coupon.getDiscountValue()));
+      pstmt.setLong(4, coupon.getDiscountValue());
+      pstmt.setBoolean(5, true);
       pstmt.executeUpdate();
     } catch (Exception e) {
       log.info("쿠폰 생성 에러 ");
@@ -80,8 +81,8 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
   @Override
   public void delete(SingleKey<Long> key) throws Exception {
     try (PreparedStatement pstmt = connection.prepareStatement(CouponQuery.DELETE)) {
-      pstmt.setString(1, key.toString());
-      pstmt.executeQuery();
+      pstmt.setLong(1, key.getId());
+      pstmt.executeUpdate();
     } catch (Exception e) {
       throw new Exception("delete coupon error");
     }

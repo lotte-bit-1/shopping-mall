@@ -3,6 +3,8 @@ package coupon;
 import com.bit.shop.dao.CouponRepository;
 import com.bit.shop.domain.Coupon;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.service.CouponService;
+import com.bit.shop.service.CouponServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,15 +15,22 @@ public class CouponInsertTest {
     Logger log = Logger.getLogger("CouponInsertTest");
 
     @Test
+    @DisplayName("coupon service test")
+    void insertViaService(){
+
+
+    }
+
+    @Test
     @DisplayName("coupon insert test")
     void insert() throws Exception {
         CouponRepository couponRepository = new CouponRepository();
         couponRepository.insert(Coupon.builder()
-                .memberId(3L)
+                .memberId(1L)
                 .name("name")
                 .isUsed(true)
                 .discountPolicy("h")
-                .discountPolicy("k")
+                .discountValue(3)
                 .build());
     }
 
