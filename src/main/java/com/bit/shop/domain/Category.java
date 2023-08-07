@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@Builder
 @Getter
 @RequiredArgsConstructor
 public class Category extends BaseEntity<SingleKey<Long>> {
