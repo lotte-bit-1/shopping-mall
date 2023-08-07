@@ -1,4 +1,4 @@
-package com.bit.shop.dao;
+package com.bit.shop.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
