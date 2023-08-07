@@ -1,16 +1,20 @@
 package com.bit.shop.domain;
 
 import com.bit.shop.domain.keys.SingleKey;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Builder
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Cart extends BaseEntity<SingleKey<Long>> {
 
-    private final int productQuantity;
-    private final Long productId;
-    private final Long memberId;
+    private int productQuantity;
+    private Long productId;
+    private Long memberId;
+
+    public void setKey(SingleKey<Long> key) {
+        super.key = key;
+    }
 }
