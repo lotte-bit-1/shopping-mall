@@ -1,5 +1,7 @@
 package com.bit.shop.domain;
 
-public class Orders extends BaseEntity<Long> {
+import com.bit.shop.domain.keys.SingleKey;
+
+public class Orders extends BaseEntity<SingleKey<Long>> {
 
 }

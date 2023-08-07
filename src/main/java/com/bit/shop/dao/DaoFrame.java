@@ -1,14 +1,16 @@
 package com.bit.shop.dao;
 
 import com.bit.shop.domain.BaseEntity;
+import com.bit.shop.domain.keys.EntityKey;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface DaoFrame<K extends Long,V extends BaseEntity<Long>> {
+public interface DaoFrame<K extends EntityKey, V extends BaseEntity<K>> {
 
-  public Optional<V> getById(K key);
-  public List<V> getAll();
-  public void insert(V object);
-  public void delete(K key);
-  public void update(V object);
+  Optional<V> getById(K key);
+  List<V> getAll();
+  void insert(V object);
+  void delete(K key);
+  void update(V object);
 }

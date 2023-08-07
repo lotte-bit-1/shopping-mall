@@ -1,6 +1,10 @@
 package com.bit.shop.domain;
 
 
-public abstract class BaseEntity<Id extends Number> {
-    Id id;
+import com.bit.shop.domain.keys.EntityKey;
+
+import java.util.Date;
+
+public abstract class BaseEntity<KEY extends EntityKey> {
+    private KEY key;
 }

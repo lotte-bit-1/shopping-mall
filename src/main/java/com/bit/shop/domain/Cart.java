@@ -1,5 +1,7 @@
 package com.bit.shop.domain;
 
-public class Cart<K extends Number> extends BaseEntity<Long>{
+import com.bit.shop.domain.keys.SingleKey;
+
+public class Cart extends BaseEntity<SingleKey<Long>> {
 
 }

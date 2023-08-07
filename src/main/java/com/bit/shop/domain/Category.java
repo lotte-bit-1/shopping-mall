@@ -1,5 +1,7 @@
 package com.bit.shop.domain;
 
-public class Category extends BaseEntity<Long> {
+import com.bit.shop.domain.keys.SingleKey;
+
+public class Category extends BaseEntity<SingleKey<Long>> {
 
 }
