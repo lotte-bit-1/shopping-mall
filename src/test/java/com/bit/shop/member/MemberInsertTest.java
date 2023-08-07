@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 
 public class MemberInsertTest {
 
-    Logger log = Logger.getLogger("MemberInsertTest");
-
     MemberService service;
 
     @BeforeEach
@@ -25,7 +23,7 @@ public class MemberInsertTest {
 
     @AfterEach
     void after() throws Exception {
-        service.removeAll();
+        service.removeByEmail("abc@naver.com");
     }
 
     @DisplayName("Member Insert Test")

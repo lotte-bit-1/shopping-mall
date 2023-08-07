@@ -1,19 +1,18 @@
 package com.bit.shop.member;
 
 import com.bit.shop.domain.Member;
-import com.bit.shop.dto.MemberResponseDto;
 import com.bit.shop.service.MemberService;
 import com.bit.shop.service.MemberServiceImpl;
+import java.util.List;
 import java.util.logging.Logger;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-public class MemberSelectTest {
-
-    Logger log = Logger.getLogger("MemberInsertTest");
+public class MemberDeleteTest {
 
     MemberService service;
 
@@ -22,21 +21,23 @@ public class MemberSelectTest {
         service = new MemberServiceImpl();
     }
 
-    @DisplayName("Member Select Test")
+    @DisplayName("Member Delete Test")
     @Test
     @Order(1)
-    void select() throws Exception {
-
+    void delete() throws Exception {
         // given
-        long id = 1L;
-        String email = "email";
+        Member member = Member.builder()
+            .email("abc@naver.com")
+            .password("111111")
+            .name("junyong")
+            .build();
 
-        // when
-        Member member = service.findMember(id);
+        service.register(member);
 
-        // then
-        Assertions.assertEquals(email, member.getEmail());
-        
+        // when, then
+        service.removeByEmail(member.getEmail());
+
+        Assertions.assertEquals(0, service.findAll().size());
+
     }
-
 }

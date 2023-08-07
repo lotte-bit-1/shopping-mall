@@ -32,14 +32,14 @@ public class MemberServiceImpl implements MemberService {
     public Member findMember(Long id) throws Exception {
         return memberRepository.getById(
             new SingleKey<>(id)).orElseThrow(() ->
-            new Exception("조회 에러"));
+            new Exception("조회 실패"));
     }
 
     @Override
     public MemberResponseDto findMemberDto(Long id) throws Exception {
         return memberRepository.getDtoById(
             id).orElseThrow(() ->
-            new Exception("조회 에러"));
+            new Exception("조회 실패"));
     }
 
     @Override

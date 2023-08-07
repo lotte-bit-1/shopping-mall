@@ -31,7 +31,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
     }
 
     @Override
-    public Optional<Member> getById(SingleKey<Long> key) {
+    public Optional<Member> getById(SingleKey<Long> key) throws Exception {
 
         log.info("Selected id: "+key.getId());
         Connection connection = cp.getConnection();
@@ -55,6 +55,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             }
         } catch (Exception e) {
             log.info(e.getMessage());
+            throw new Exception("회원가입에러");
         } finally {
             cp.releaseConnection(connection);
             DaoFrame.close(pStmt, rSet);
@@ -63,7 +64,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
     }
 
     @Override
-    public List<Member> getAll() {
+    public List<Member> getAll() throws Exception {
 
         log.info("Selected ...");
 
@@ -100,7 +101,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
     }
 
     @Override
-    public void insert(Member member) {
+    public void insert(Member member) throws Exception {
         log.info("Inserted: " + member.getEmail());
         int result = 0;
         Connection con = cp.getConnection();
@@ -123,7 +124,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
     }
 
     @Override
-    public void delete(SingleKey<Long> key) {
+    public void delete(SingleKey<Long> key) throws Exception {
         log.info("Deleted: " + key.getId());
         int result = 0;
         Connection con = cp.getConnection();
@@ -136,6 +137,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             result = pstmt.executeUpdate();
         } catch (Exception e) {
             log.info(e.getMessage());
+            throw new Exception("삭제에러");
         } finally {
             cp.releaseConnection(con);
             DaoFrame.close(pstmt);
@@ -144,7 +146,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
     }
 
     @Override
-    public void update(Member member) {
+    public void update(Member member) throws Exception {
         log.info("Updated: " + member.getKey().getId());
         int result = 0;
         Connection con = cp.getConnection();
@@ -159,6 +161,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             result = pstmt.executeUpdate();
         } catch (Exception e) {
             log.info(e.getMessage());
+            throw new Exception("조회에러");
         } finally {
             cp.releaseConnection(con);
             DaoFrame.close(pstmt);
@@ -166,7 +169,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
         //return result;
     }
 
-    public Optional<MemberResponseDto> getDtoById(Long id) {
+    public Optional<MemberResponseDto> getDtoById(Long id) throws Exception {
         log.info("Selected: " + id);
         Connection con = cp.getConnection();
         PreparedStatement pstmt = null;
@@ -189,6 +192,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
 
         } catch (Exception e) {
             log.info(e.getMessage());
+            throw new Exception("조회에러");
         } finally {
             cp.releaseConnection(con);
             DaoFrame.close(pstmt, rSet);
@@ -221,6 +225,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
 
         } catch (Exception e) {
             log.info(e.getMessage());
+            throw new Exception("조회에러");
         } finally {
             cp.releaseConnection(con);
             DaoFrame.close(pstmt, rSet);
@@ -241,6 +246,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             result = pstmt.executeUpdate();
         } catch (Exception e) {
             log.info(e.getMessage());
+            throw new Exception("삭제에러");
         } finally {
             cp.releaseConnection(con);
             DaoFrame.close(pstmt);
