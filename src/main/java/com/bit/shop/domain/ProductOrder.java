@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Builder
 public class ProductOrder extends BaseEntity<SingleKey<Long>> {
-    private final long parentId;
+    private final long productId;
     private final String name;
     private final int level;
 
