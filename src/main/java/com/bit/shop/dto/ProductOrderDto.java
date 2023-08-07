@@ -9,12 +9,14 @@ import lombok.*;
 @NoArgsConstructor(force = false)
 public class ProductOrderDto {
     private long productId;
-    private String name;
-    private int price;
+    private long orderId;
+    private long price;
+    private long quantity;
 
     public ProductOrderDto(ProductOrder productOrder) {
         this.productId = productOrder.getProductId();
-        this.name = productOrder.getName();
+        this.orderId = productOrder.getOrderId();
+        this.quantity = productOrder.getQuantity();
         this.price = productOrder.getPrice();
     }
 }

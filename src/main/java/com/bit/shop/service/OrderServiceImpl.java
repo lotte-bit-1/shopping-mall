@@ -1,10 +1,14 @@
 package com.bit.shop.service;
 
 import com.bit.shop.dao.OrdersRepository;
-import com.bit.shop.domain.Cart;
+import com.bit.shop.dao.ProductOrderRepository;
+import com.bit.shop.dao.ProductRepository;
 import com.bit.shop.domain.Orders;
+import com.bit.shop.domain.ProductOrder;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.dto.CartDto;
 import com.bit.shop.dto.OrdersDto;
+import com.bit.shop.dto.ProductDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,15 +16,17 @@ import java.util.stream.Collectors;
 
 public class OrderServiceImpl implements OrderService {
 
-    OrdersRepository repository;
+    OrdersRepository ordersRepository;
+    ProductRepository productRepository;
+    ProductOrderRepository productOrderRepository;
 
     public OrderServiceImpl() {
-        repository = new OrdersRepository();
+        ordersRepository = new OrdersRepository();
     }
 
     @Override
     public void register(OrdersDto orders) throws Exception {
-        repository.update(
+        ordersRepository.update(
                 Orders.builder()
                         .memberId(orders.getMemberId())
                         .status(orders.getStatus())
@@ -30,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void modify(OrdersDto orders) throws Exception {
-        repository.update(
+        ordersRepository.update(
                 Orders.builder()
                 .memberId(orders.getMemberId())
                 .status(orders.getStatus())
@@ -40,12 +46,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void remove(SingleKey<Long> key) throws Exception {
-        repository.delete(key);
+        ordersRepository.delete(key);
     }
 
     @Override
     public OrdersDto getOrder(SingleKey<Long> key) throws Exception {
-        Optional<Orders> order = repository.getById(key);
+        Optional<Orders> order = ordersRepository.getById(key);
         if (order.isEmpty()) {
             throw new Exception("조회할 주문이 없습니다.");
         }
@@ -54,23 +60,65 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrdersDto> getAll() throws Exception {
-        return repository.getAll().stream().map(OrdersDto::new).collect(Collectors.toList());
+        return ordersRepository.getAll().stream().map(OrdersDto::new).collect(Collectors.toList());
     }
 
     @Override
     public List<OrdersDto> getMembersOrder(Long memberId) throws Exception {
-        return repository.getMembersOrder(memberId).stream().map(OrdersDto::new).collect(Collectors.toList());
+        return ordersRepository.getMembersOrder(memberId).stream().map(OrdersDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public void OrderCart(Cart cart) throws Exception {
-        OrdersDto orders = OrdersDto.builder()
-                .memberId(cart.getMemberId())
+    public Long makeOrder(Long memberId) throws Exception {
+        Orders orders = Orders.builder()
+                .memberId(memberId)
                 .status("주문")
                 .build();
 
-        register(orders);
-
-//        ProductOrder productOrder
+        return ordersRepository.insertAndGet(orders);
     }
+
+    @Override
+    public Long OrderCart(List<CartDto> cartDtoList) throws Exception {
+        Long ordersId = makeOrder(cartDtoList.get(0).getMemberId());
+        Long totalPrice = 0L;
+
+        for (CartDto cart : cartDtoList) {
+            long price = productRepository.getById(new SingleKey<Long>(cart.getProductId())).get().getPrice();
+            long productId = cart.getProductId();
+            long quantity = cart.getProductQuantity();
+
+            ProductOrder productOrder = ProductOrder.builder()
+                    .orderId(ordersId)
+                    .productId(productId)
+                    .quantity(quantity)
+                    .price(price)
+                    .build();
+
+            totalPrice += price * quantity;
+            productOrderRepository.insert(productOrder);
+        }
+
+        return totalPrice;
+    }
+
+    @Override
+    public Long OrderProduct(ProductDto product, Long memberId) throws Exception {
+        Long ordersId = makeOrder(memberId);
+        long price = product.getPrice();
+        long quantity = product.getQuantity();
+
+        // Unique인 코드값으로 ID PK 조회
+        productOrderRepository.insert(
+                ProductOrder.builder()
+                        .orderId(ordersId)
+//                        .productId(productRepository.getByCode(product.getCode())))
+                        .quantity(quantity)
+                        .price(price)
+                .build()
+        );
+
+        return price * quantity;
+    }
+
 }

@@ -125,11 +125,19 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         int result = 0;
         Connection con = cp.getConnection();
         PreparedStatement pstmt = null;
+        ResultSet rSet = null;
+
         try {
-            pstmt = con.prepareStatement("INSERT INTO orders(member_id, status) VALUES (?, ?)");
+            String generalColumns[] = {"id"};
+            pstmt = con.prepareStatement("INSERT INTO orders(member_id, status) VALUES (?, ?)", generalColumns);
             pstmt.setLong(1, orders.getMemberId());
             pstmt.setString(2, orders.getStatus());
             result = pstmt.executeUpdate();
+
+            rSet = pstmt.getGeneratedKeys();
+            while (rSet.next()) {
+
+            }
         } catch (Exception e) {
             log.info(e.getMessage());
             throw new Exception("주문 추가 에러");
@@ -139,6 +147,35 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         }
 
 //        return result;
+    }
+
+    public Long insertAndGet(Orders orders) throws Exception {
+        int result = 0;
+        Long id = -1L;
+        Connection con = cp.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rSet = null;
+
+
+        try {
+            String[] generalColumns = {"id"};
+            pstmt = con.prepareStatement("INSERT INTO orders(member_id, status) VALUES (?, ?)", generalColumns);
+            pstmt.setLong(1, orders.getMemberId());
+            result = pstmt.executeUpdate();
+
+            rSet = pstmt.getGeneratedKeys();
+            if (rSet.next()) {
+                id = Long.parseLong(rSet.getString(1));
+            }
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            throw new Exception("주문 추가 에러");
+        } finally {
+            DaoFrame.close(pstmt);
+            cp.releaseConnection(con);
+        }
+
+        return id;
     }
 
     @Override

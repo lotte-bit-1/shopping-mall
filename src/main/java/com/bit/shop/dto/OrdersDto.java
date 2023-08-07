@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(force = false)
-public class OrdersDto extends BaseEntity<SingleKey<Long>> {
+public class OrdersDto {
 
     private Long memberId;
     private LocalDateTime regDate;
