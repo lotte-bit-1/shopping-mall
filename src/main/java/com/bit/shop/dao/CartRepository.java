@@ -106,8 +106,8 @@ public class CartRepository implements DaoFrame<SingleKey<Long>, Cart> {
     try {
       final String query = "INSERT INTO cart (product_id, member_id, product_quantity) VALUES (?, ?, ?)";
       pstmt = con.prepareStatement(query);
-      pstmt.setLong(1, cart.getProductId().longValue());
-      pstmt.setLong(2, cart.getMemberId().longValue());
+      pstmt.setLong(1, cart.getProductId());
+      pstmt.setLong(2, cart.getMemberId());
       pstmt.setInt(3, cart.getProductQuantity());
       result = pstmt.executeUpdate();
     } catch(Exception e) {
