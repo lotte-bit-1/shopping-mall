@@ -1,34 +1,38 @@
 package com.bit.shop.dao;
 
 import com.bit.shop.domain.BaseEntity;
+import com.bit.shop.domain.Cart;
+import com.bit.shop.domain.Coupon;
 import com.bit.shop.domain.keys.EntityKey;
+import com.bit.shop.domain.keys.SingleKey;
 import java.util.List;
 import java.util.Optional;
 
-public class CouponRepository implements DaoFrame{
+public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon>{
+
 
   @Override
-  public Optional getById(EntityKey key) {
+  public Optional<Coupon> getById(SingleKey<Long> key) {
     return Optional.empty();
   }
 
   @Override
-  public List getAll() {
+  public List<Coupon> getAll() {
     return null;
   }
 
   @Override
-  public void insert(BaseEntity object) {
+  public void insert(Coupon object) {
 
   }
 
   @Override
-  public void delete(EntityKey key) {
+  public void delete(SingleKey<Long> key) {
 
   }
 
   @Override
-  public void update(BaseEntity object) {
+  public void update(Coupon object) {
 
   }
 }

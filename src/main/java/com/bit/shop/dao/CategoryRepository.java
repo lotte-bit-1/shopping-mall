@@ -1,34 +1,37 @@
 package com.bit.shop.dao;
 
 import com.bit.shop.domain.BaseEntity;
+import com.bit.shop.domain.Cart;
+import com.bit.shop.domain.Category;
 import com.bit.shop.domain.keys.EntityKey;
+import com.bit.shop.domain.keys.SingleKey;
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryRepository implements DaoFrame{
+public class CategoryRepository implements DaoFrame<SingleKey<Long>, Category>{
 
   @Override
-  public Optional getById(EntityKey key) {
+  public Optional<Category> getById(SingleKey<Long> key) {
     return Optional.empty();
   }
 
   @Override
-  public List getAll() {
+  public List<Category> getAll() {
     return null;
   }
 
   @Override
-  public void insert(BaseEntity object) {
+  public void insert(Category object) {
 
   }
 
   @Override
-  public void delete(EntityKey key) {
+  public void delete(SingleKey<Long> key) {
 
   }
 
   @Override
-  public void update(BaseEntity object) {
+  public void update(Category object) {
 
   }
 }
