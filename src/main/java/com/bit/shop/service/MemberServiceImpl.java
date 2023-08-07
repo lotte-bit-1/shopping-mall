@@ -3,18 +3,28 @@ package com.bit.shop.service;
 import com.bit.shop.dao.MemberRepository;
 import com.bit.shop.domain.Member;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.dto.LoginMember;
+import com.bit.shop.dto.LoginRequestDto;
+import java.util.List;
 
 public class MemberServiceImpl implements MemberService {
 
     private MemberRepository memberRepository;
 
-    MemberServiceImpl() {
+    public MemberServiceImpl() {
         memberRepository = new MemberRepository();
     }
 
     @Override
     public void register(Member member) throws Exception {
         memberRepository.insert(member);
+    }
+
+    @Override
+    public LoginMember login(LoginRequestDto loginFormDto) throws Exception {
+        return memberRepository.getByEmailAndPassword(loginFormDto.getEmail(),
+            loginFormDto.getPassword()).orElseThrow(() ->
+            new Exception("로그인 실패"));
     }
 
     @Override
@@ -30,7 +40,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public void removeByEmail(String email) throws Exception {
+        memberRepository.deleteByEmail(email);
+    }
+
+    @Override
     public void modifyMember(Member member) throws Exception {
         memberRepository.update(member);
+    }
+
+    @Override
+    public void removeAll() throws Exception {
+        memberRepository.deleteAll();
+    }
+
+    @Override
+    public List<Member> findAll() throws Exception {
+        return memberRepository.getAll();
     }
 }

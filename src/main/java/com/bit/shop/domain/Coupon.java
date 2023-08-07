@@ -4,15 +4,15 @@ import com.bit.shop.domain.keys.SingleKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 public class Coupon extends BaseEntity<SingleKey<Long>> {
-    private final Long memberId;
-    private final String name;
-    private final String discountPolicy;
-    private final int discountValue;
-    private final boolean isUsed;
+
+    private Long memberId;
+    private String name;
+    private String discountPolicy;
+    private int discountValue;
+    private boolean isUsed;
 }

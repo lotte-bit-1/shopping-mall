@@ -2,6 +2,7 @@ package com.bit.shop.dao;
 
 import com.bit.shop.domain.Member;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.dto.LoginMember;
 import com.bit.shop.util.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,17 +32,17 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
     @Override
     public Optional<Member> getById(SingleKey<Long> key) {
 
-        log.info("Selected : " + key.getId());
-
+        log.info("Selected id: "+key.getId());
         Connection connection = cp.getConnection();
         PreparedStatement pStmt = null;
+        ResultSet rSet = null;
         Member member = null;
         try {
             pStmt = connection.prepareStatement(
-                "SELECT id, email, password, name FROM cust WHERE id=?"
+                "SELECT id, email, password, name FROM member WHERE id=?"
             );
             pStmt.setLong(1, key.getId());
-            ResultSet rSet = pStmt.executeQuery();
+            rSet = pStmt.executeQuery();
 
             if (rSet.next()) {
 
@@ -55,7 +56,7 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             log.info(e.getMessage());
         } finally {
             cp.releaseConnection(connection);
-            DaoFrame.close();
+            DaoFrame.close(pStmt, rSet);
         }
         return Optional.ofNullable(member);
     }
@@ -157,6 +158,76 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             result = pstmt.executeUpdate();
         } catch (Exception e) {
             log.info(e.getMessage());
+        } finally {
+            cp.releaseConnection(con);
+            DaoFrame.close(pstmt);
+        }
+        //return result;
+    }
+
+    public Optional<LoginMember> getByEmailAndPassword(String email, String password) throws Exception {
+        log.info("Selected: " + email);
+        Connection con = cp.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rSet = null;
+        LoginMember loginMember = null;
+        try {
+            pstmt = con.prepareStatement(
+                "SELECT id, email, name FROM member WHERE email = ?"
+                    + "AND password = ?"
+            );
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            rSet = pstmt.executeQuery();
+            if(rSet.next()) {
+                loginMember = LoginMember.builder()
+                    .id(rSet.getLong("id"))
+                    .email(rSet.getString("email"))
+                    .name(rSet.getString("name"))
+                    .build();
+            }
+
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        } finally {
+            cp.releaseConnection(con);
+            DaoFrame.close(pstmt, rSet);
+        }
+        return Optional.ofNullable(loginMember);
+    }
+
+    public void deleteByEmail(String email) throws Exception {
+        log.info("Deleted: " + email);
+        int result = 0;
+        Connection con = cp.getConnection();
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = con.prepareStatement(
+                "DELETE FROM member WHERE email = ?"
+            );
+            pstmt.setString(1, email);
+            result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        } finally {
+            cp.releaseConnection(con);
+            DaoFrame.close(pstmt);
+        }
+    }
+
+    public void deleteAll() throws Exception {
+        log.info("DeletedAll: ");
+        int result = 0;
+        Connection con = cp.getConnection();
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = con.prepareStatement(
+                "DELETE FROM member"
+            );
+            result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            throw new Exception("삭제에러.");
         } finally {
             cp.releaseConnection(con);
             DaoFrame.close(pstmt);
