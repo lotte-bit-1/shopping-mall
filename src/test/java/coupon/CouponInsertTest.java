@@ -14,10 +14,12 @@ import java.util.logging.Logger;
 public class CouponInsertTest {
     Logger log = Logger.getLogger("CouponInsertTest");
 
+
     @Test
     @DisplayName("coupon service test")
-    void insertViaService(){
-
+    void update() throws Exception {
+        CouponService couponService = new CouponServiceImpl();
+        couponService.useCoupon("name", 1L);
 
     }
 

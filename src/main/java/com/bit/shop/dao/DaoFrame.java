@@ -11,7 +11,7 @@ public interface DaoFrame<K extends EntityKey, V extends BaseEntity<K>> {
   List<V> getAll() throws Exception;
   void insert(V object) throws Exception;
   void delete(K key) throws Exception;
-  void update(V object);
+  void update(V object) throws Exception;
 
   static void close(AutoCloseable ... autoCloseables) {
     for(AutoCloseable autoCloseable : autoCloseables) {

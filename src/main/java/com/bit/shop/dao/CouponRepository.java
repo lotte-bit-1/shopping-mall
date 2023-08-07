@@ -55,6 +55,8 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
       return list;
     } catch (Exception e) {
       throw new Exception("select error");
+    } finally {
+      connection.close();
     }
   }
 
@@ -65,11 +67,13 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
       pstmt.setString(2, coupon.getName());
       pstmt.setString(3, coupon.getDiscountPolicy());
       pstmt.setLong(4, coupon.getDiscountValue());
-      pstmt.setBoolean(5, true);
+      pstmt.setBoolean(5, coupon.isUsed());
       pstmt.executeUpdate();
     } catch (Exception e) {
       log.info("쿠폰 생성 에러 ");
       throw new Exception("insert coupon error");
+    } finally {
+      connection.close();
     }
   }
 
@@ -85,11 +89,22 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
       pstmt.executeUpdate();
     } catch (Exception e) {
       throw new Exception("delete coupon error");
+    } finally {
+      connection.close();
     }
   }
 
   @Override
-  public void update(Coupon object) {
+  public void update(Coupon object) throws Exception {
+    try (PreparedStatement pstmt = connection.prepareStatement(CouponQuery.UPDATE)) {
+      pstmt.setString(1, object.getName());
+      pstmt.setLong(2, object.getMemberId());
+      pstmt.executeUpdate();
+    } catch (Exception e) {
+      throw new Exception("delete coupon error");
+    } finally {
+      connection.close();
+    }
 
   }
 }
