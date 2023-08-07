@@ -2,6 +2,7 @@ package coupon;
 
 import com.bit.shop.dao.CouponRepository;
 import com.bit.shop.domain.Coupon;
+import com.bit.shop.domain.keys.SingleKey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +31,14 @@ public class CouponInsertTest {
         CouponRepository couponRepository = new CouponRepository();
         List<Coupon> all = couponRepository.getAll();
         log.info(all.get(0).getName());
+        log.info("select all success");
+    }
+
+    @Test
+    @DisplayName("coupon select test")
+    void delete() throws Exception {
+        CouponRepository couponRepository = new CouponRepository();
+        couponRepository.delete(new SingleKey<>(2L));
         log.info("select all success");
     }
 }

@@ -15,13 +15,13 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
-  ConnectionPool connection;
-  Connection con;
+  ConnectionPool connectionPool;
+  Connection connection;
 
   public CouponRepository() {
     try {
-      connection = ConnectionPool.create();
-      con = connection.getConnection();
+      connectionPool = ConnectionPool.create();
+      connection = connectionPool.getConnection();
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
@@ -40,7 +40,7 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
     List<Coupon> list = new ArrayList<>();
     ResultSet resultSet = null;
     try {
-      pstmt = con.prepareStatement(CouponQuery.selectAll);
+      pstmt = connection.prepareStatement(CouponQuery.SELECTALL);
       resultSet = pstmt.executeQuery();
       while (resultSet.next()) {
         Coupon coupon = Coupon.builder()
@@ -60,8 +60,7 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
 
   @Override
   public void insert(Coupon coupon) throws Exception {
-    log.info(CouponQuery.insert);
-    try (PreparedStatement pstmt = connection.getConnection().prepareStatement(CouponQuery.insert)) {
+    try (PreparedStatement pstmt = connection.prepareStatement(CouponQuery.INSERT)) {
       pstmt.setString(1, String.valueOf(coupon.getMemberId()));
       pstmt.setString(2, coupon.getName());
       pstmt.setString(3, coupon.getDiscountPolicy());
@@ -73,9 +72,19 @@ public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
     }
   }
 
+  /**
+   * 쿠폰을 사용하면 쿠폰이 삭제 된다
+   *
+   * @param key coupon id
+   */
   @Override
-  public void delete(SingleKey<Long> key) {
-
+  public void delete(SingleKey<Long> key) throws Exception {
+    try (PreparedStatement pstmt = connection.prepareStatement(CouponQuery.DELETE)) {
+      pstmt.setString(1, key.toString());
+      pstmt.executeQuery();
+    } catch (Exception e) {
+      throw new Exception("delete coupon error");
+    }
   }
 
   @Override

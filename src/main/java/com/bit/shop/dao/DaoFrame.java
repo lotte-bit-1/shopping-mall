@@ -10,7 +10,7 @@ public interface DaoFrame<K extends EntityKey, V extends BaseEntity<K>> {
   Optional<V> getById(K key);
   List<V> getAll() throws Exception;
   void insert(V object) throws Exception;
-  void delete(K key);
+  void delete(K key) throws Exception;
   void update(V object);
 
   static void close(AutoCloseable ... autoCloseables) {
