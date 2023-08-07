@@ -11,7 +11,9 @@ public interface MemberService {
 
     LoginMember login(LoginRequestDto loginFormDto) throws Exception;
 
-    MemberResponseDto findMember(Long id) throws Exception;
+    Member findMember(Long id) throws Exception;
+
+    MemberResponseDto findMemberDto(Long id) throws Exception;
 
     List<Member> findAll() throws Exception;
 

@@ -7,6 +7,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@Builder
 public class Cart extends BaseEntity<SingleKey<Long>> {
 
     private int productQuantity;
