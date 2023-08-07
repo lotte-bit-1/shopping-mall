@@ -19,7 +19,7 @@ public class ProductOrderRepository implements DaoFrame<SingleKey<Long>, Product
     }
 
     @Override
-    public void insert(ProductOrder object) {
+    public void insert(ProductOrder productOrder) {
 
     }
 

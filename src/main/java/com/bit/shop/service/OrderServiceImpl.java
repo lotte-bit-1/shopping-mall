@@ -1,11 +1,14 @@
 package com.bit.shop.service;
 
 import com.bit.shop.dao.OrdersRepository;
+import com.bit.shop.domain.Cart;
 import com.bit.shop.domain.Orders;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.dto.OrdersDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -16,13 +19,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void register(Orders orders) throws Exception {
-        repository.insert(orders);
+    public void register(OrdersDto orders) throws Exception {
+        repository.update(
+                Orders.builder()
+                        .memberId(orders.getMemberId())
+                        .status(orders.getStatus())
+                        .build()
+        );
     }
 
     @Override
-    public void modify(Orders orders) throws Exception {
-        repository.update(orders);
+    public void modify(OrdersDto orders) throws Exception {
+        repository.update(
+                Orders.builder()
+                .memberId(orders.getMemberId())
+                .status(orders.getStatus())
+                .build()
+        );
     }
 
     @Override
@@ -31,21 +44,33 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Orders getOrder(SingleKey<Long> key) throws Exception {
+    public OrdersDto getOrder(SingleKey<Long> key) throws Exception {
         Optional<Orders> order = repository.getById(key);
         if (order.isEmpty()) {
             throw new Exception("조회할 주문이 없습니다.");
         }
-        return order.get();
+        return new OrdersDto(order.get());
     }
 
     @Override
-    public List<Orders> getAll() throws Exception {
-        return repository.getAll();
+    public List<OrdersDto> getAll() throws Exception {
+        return repository.getAll().stream().map(OrdersDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public List<Orders> getMembersOrder(Long memberId) throws Exception {
-        return repository.getMembersOrder(memberId);
+    public List<OrdersDto> getMembersOrder(Long memberId) throws Exception {
+        return repository.getMembersOrder(memberId).stream().map(OrdersDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public void OrderCart(Cart cart) throws Exception {
+        OrdersDto orders = OrdersDto.builder()
+                .memberId(cart.getMemberId())
+                .status("주문")
+                .build();
+
+        register(orders);
+
+//        ProductOrder productOrder
     }
 }

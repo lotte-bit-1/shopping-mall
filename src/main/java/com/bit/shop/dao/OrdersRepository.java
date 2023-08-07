@@ -2,6 +2,7 @@ package com.bit.shop.dao;
 
 import com.bit.shop.domain.Orders;
 import com.bit.shop.domain.keys.SingleKey;
+import com.bit.shop.dto.OrdersDto;
 import com.bit.shop.util.ConnectionPool;
 
 import java.sql.Connection;
