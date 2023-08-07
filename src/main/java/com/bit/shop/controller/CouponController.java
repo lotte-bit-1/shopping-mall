@@ -1,6 +1,7 @@
 package com.bit.shop.controller;
 
 import com.bit.shop.domain.Coupon;
+import com.bit.shop.dto.CouponTypeDto;
 import com.bit.shop.service.CouponService;
 import com.bit.shop.service.CouponServiceImpl;
 
@@ -36,5 +37,19 @@ public class CouponController {
                 my) {
             System.out.println("coupon id: " + c.getName());
         }
+    }
+
+    public CouponTypeDto getCouponTypeAndValue(String couponName, Long userId) throws Exception {
+        List<Coupon> allCoupon = couponService.getAllCoupon();
+        for (Coupon c :
+                allCoupon) {
+            if (c.getName().equals(couponName) && c.getMemberId().equals(userId)) {
+                return CouponTypeDto.builder()
+                        .discountValue(c.getDiscountValue())
+                        .discountPolicy(c.getDiscountPolicy())
+                        .build();
+            }
+        }
+        return null;
     }
 }
