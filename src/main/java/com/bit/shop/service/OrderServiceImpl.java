@@ -22,11 +22,13 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderServiceImpl() {
         ordersRepository = new OrdersRepository();
+        productRepository = new ProductRepository();
+        productOrderRepository = new ProductOrderRepository();
     }
 
     @Override
     public void register(OrdersDto orders) throws Exception {
-        ordersRepository.update(
+        ordersRepository.insert(
                 Orders.builder()
                         .memberId(orders.getMemberId())
                         .status(orders.getStatus())
@@ -47,6 +49,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void remove(SingleKey<Long> key) throws Exception {
         ordersRepository.delete(key);
+    }
+
+    @Override
+    public void removeAll() throws Exception {
+        ordersRepository.deleteAll();
     }
 
     @Override
@@ -79,12 +86,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long OrderCart(List<CartDto> cartDtoList) throws Exception {
+    public Long orderCart(List<CartDto> cartDtoList) throws Exception {
         Long ordersId = makeOrder(cartDtoList.get(0).getMemberId());
         Long totalPrice = 0L;
 
         for (CartDto cart : cartDtoList) {
             long price = productRepository.getById(new SingleKey<Long>(cart.getProductId())).get().getPrice();
+//            long price = 10L;
             long productId = cart.getProductId();
             long quantity = cart.getProductQuantity();
 
@@ -103,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long OrderProduct(ProductDto product, Long memberId) throws Exception {
+    public Long orderProduct(ProductDto product, Long memberId) throws Exception {
         Long ordersId = makeOrder(memberId);
         long price = product.getPrice();
         long quantity = product.getQuantity();
