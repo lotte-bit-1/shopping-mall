@@ -1,6 +1,6 @@
 package member;
 
-import com.bit.shop.domain.Member;
+import com.bit.shop.dto.MemberResponseDto;
 import com.bit.shop.service.MemberService;
 import com.bit.shop.service.MemberServiceImpl;
 import java.util.logging.Logger;
@@ -31,10 +31,10 @@ public class MemberSelectTest {
         String email = "email";
 
         // when
-        Member member = service.findMember(id);
+        MemberResponseDto memberResponseDto = service.findMember(id);
 
         // then
-        Assertions.assertEquals(email, member.getEmail());
+        Assertions.assertEquals(email, memberResponseDto.getEmail());
 
 
     }

@@ -3,6 +3,7 @@ package com.bit.shop.service;
 import com.bit.shop.domain.Member;
 import com.bit.shop.dto.LoginMember;
 import com.bit.shop.dto.LoginRequestDto;
+import com.bit.shop.dto.MemberResponseDto;
 import java.util.List;
 
 public interface MemberService {
@@ -10,7 +11,7 @@ public interface MemberService {
 
     LoginMember login(LoginRequestDto loginFormDto) throws Exception;
 
-    Member findMember(Long id) throws Exception;
+    MemberResponseDto findMember(Long id) throws Exception;
 
     List<Member> findAll() throws Exception;
 

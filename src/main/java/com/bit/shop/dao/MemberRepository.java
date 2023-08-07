@@ -3,6 +3,7 @@ package com.bit.shop.dao;
 import com.bit.shop.domain.Member;
 import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.dto.LoginMember;
+import com.bit.shop.dto.MemberResponseDto;
 import com.bit.shop.util.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -163,6 +164,37 @@ public class MemberRepository implements DaoFrame<SingleKey<Long>, Member> {
             DaoFrame.close(pstmt);
         }
         //return result;
+    }
+
+    public Optional<MemberResponseDto> getDtoById(Long id) {
+        log.info("Selected: " + id);
+        Connection con = cp.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rSet = null;
+        MemberResponseDto memberResponseDto = null;
+
+        try {
+            pstmt = con.prepareStatement(
+                "SELECT id, email, password, name FROM member WHERE id=?"
+            );
+            pstmt.setLong(1, id);
+            rSet = pstmt.executeQuery();
+            if(rSet.next()) {
+                memberResponseDto = MemberResponseDto.builder()
+                    .id(rSet.getLong("id"))
+                    .email(rSet.getString("email"))
+                    .name(rSet.getString("name"))
+                    .build();
+            }
+
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        } finally {
+            cp.releaseConnection(con);
+            DaoFrame.close(pstmt, rSet);
+        }
+
+        return Optional.ofNullable(memberResponseDto);
     }
 
     public Optional<LoginMember> getByEmailAndPassword(String email, String password) throws Exception {

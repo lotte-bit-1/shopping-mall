@@ -5,6 +5,7 @@ import com.bit.shop.domain.Member;
 import com.bit.shop.domain.keys.SingleKey;
 import com.bit.shop.dto.LoginMember;
 import com.bit.shop.dto.LoginRequestDto;
+import com.bit.shop.dto.MemberResponseDto;
 import java.util.List;
 
 public class MemberServiceImpl implements MemberService {
@@ -28,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findMember(Long id) throws Exception {
+    public MemberResponseDto findMember(Long id) throws Exception {
         return memberRepository.getById(
             new SingleKey<>(id)).orElseThrow(() ->
             new Exception("조회 에러"));
