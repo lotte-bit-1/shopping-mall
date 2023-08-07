@@ -41,21 +41,25 @@ public class CartController {
         try {
             cartService.register(cart);
         } catch(Exception e) {
-            log.info(e.getMessage());
+            log.warning(e.getMessage());
         }
+
+        log.info("장바구니에 상품 추가");
     }
 
     public GetCartResponse get(Long id) {
-        if(id == null) {
-            throw new IllegalArgumentException("해당 장바구니의 상품은 존재하지 않습니다");
-        }
-
         Cart cart = null;
         try {
+            if(id == null) {
+                throw new IllegalArgumentException("해당 장바구니의 상품은 존재하지 않습니다");
+            }
+
             cart = cartService.getById(id);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.warning(e.getMessage());
         }
+
+        log.info("장바구니의 특정 상품 조회");
 
         return GetCartResponse.builder()
                 .memberId(cart.getMemberId())
@@ -65,61 +69,68 @@ public class CartController {
     }
 
     public List<GetCartResponse> getAll(Long memberId) {
-        if(memberId == null) {
-            throw new IllegalArgumentException("로그인이 필요한 서비스입니다");
-        }
-
         List<Cart> carts = null;
         try {
+            if(memberId == null) {
+                throw new IllegalArgumentException("로그인이 필요한 서비스입니다");
+            }
+
             carts = cartService.getAllByMemberId(memberId);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.warning(e.getMessage());
         }
 
-        List<GetCartResponse> getCartResponses = carts.stream().map(c -> GetCartResponse.builder()
+        log.info("장바구니의 모든 상품 조회");
+
+        return carts.stream().map(c -> GetCartResponse.builder()
                 .memberId(c.getMemberId())
                 .productId(c.getProductId())
                 .productQuantity(c.getProductQuantity())
                 .build()).collect(Collectors.toList());
-        return getCartResponses;
     }
 
     public void modifyProductQuantity(Long id, ModifyCartRequest cartModifyRequestDto) {
-        if(id == null) {
-            throw new IllegalArgumentException("해당 장바구니의 상품은 존재하지 않습니다");
-        }
-        if(cartModifyRequestDto.getProductQuantity() == 0) {
-            throw new IllegalArgumentException("상품 수량은 0보다 커야합니다");
-        }
-
         try {
+            if(id == null) {
+                throw new IllegalArgumentException("해당 장바구니의 상품은 존재하지 않습니다");
+            }
+            if(cartModifyRequestDto.getProductQuantity() == 0) {
+                throw new IllegalArgumentException("상품 수량은 0보다 커야합니다");
+            }
+
             cartService.modifyProductQuantityById(id, cartModifyRequestDto.getProductQuantity());
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.warning(e.getMessage());
         }
+
+        log.info("장바구니의 특정 상품의 수량 수정 완료");
     }
 
     public void remove(Long id) {
-        if(id == null) {
-            throw new IllegalArgumentException("해당 장바구니의 상품은 존재하지 않습니다");
-        }
-
         try {
+            if(id == null) {
+                throw new IllegalArgumentException("해당 장바구니의 상품은 존재하지 않습니다");
+            }
+
             cartService.remove(new SingleKey<>(id));
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.warning(e.getMessage());
         }
+
+        log.info("장바구니의 상품 하나 삭제 완료");
     }
 
     public void removeAll(Long memberId) {
-        if(memberId == null) {
-            throw new IllegalArgumentException("로그인이 필요한 서비스입니다");
-        }
-
         try {
+            if(memberId == null) {
+                throw new IllegalArgumentException("로그인이 필요한 서비스입니다");
+            }
+
             cartService.removeAllByMemberId(memberId);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.warning(e.getMessage());
         }
+
+        log.info("장바구니의 모든 상품 삭제 완료");
     }
 }
