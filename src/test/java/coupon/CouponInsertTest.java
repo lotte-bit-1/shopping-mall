@@ -6,8 +6,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CouponInsertTest {
+    Logger log = Logger.getLogger("CouponInsertTest");
 
     @Test
     @DisplayName("coupon insert test")
@@ -27,5 +29,7 @@ public class CouponInsertTest {
     void select() throws Exception {
         CouponRepository couponRepository = new CouponRepository();
         List<Coupon> all = couponRepository.getAll();
+        log.info(all.get(0).getName());
+        log.info("select all success");
     }
 }
