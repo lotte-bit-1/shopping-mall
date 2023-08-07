@@ -88,6 +88,37 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
         return list;
     }
 
+    public List<Orders> getMembersOrder(Long memberId) throws Exception {
+        Connection con = cp.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rSet = null;
+        List<Orders> list = new ArrayList<>();
+
+        try {
+            pstmt = con.prepareStatement("SELECT * FROM orders WHERE member_id = ?");
+            pstmt.setLong(1, memberId);
+
+            rSet = pstmt.executeQuery();
+            while (rSet.next()) {
+                list.add(
+                        Orders.builder()
+                                .memberId(rSet.getLong("member_id"))
+                                .regDate(LocalDateTime.parse(rSet.getString("reg_date")))
+                                .status(rSet.getString("status"))
+                                .build()
+                );
+            }
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            throw new Exception("총 주문 조회 에러");
+        } finally {
+            DaoFrame.close(pstmt, rSet);
+            cp.releaseConnection(con);
+        }
+
+        return list;
+    }
+
     @Override
     public void insert(Orders orders) throws Exception {
         int result = 0;
@@ -147,7 +178,7 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
             DaoFrame.close(pstmt);
             cp.releaseConnection(con);
         }
-        
+
 //        return result;
     }
 }
