@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Likes extends BaseEntity<CompositeKey<Long>> {
+
     private Long memberId;
     private Long productId;
 }

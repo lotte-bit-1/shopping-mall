@@ -1,4 +1,4 @@
-package coupon;
+package com.bit.shop.coupon;
 
 import com.bit.shop.dao.CouponRepository;
 import com.bit.shop.domain.Coupon;

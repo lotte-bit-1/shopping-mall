@@ -7,8 +7,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @AllArgsConstructor
+@Getter
 @Builder
 public class Product extends BaseEntity<SingleKey<Long>> {
     private Long categoryId;

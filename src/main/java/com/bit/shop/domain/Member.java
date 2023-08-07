@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+@AllArgsConstructor
 @Getter
 @Builder
-@AllArgsConstructor
 public class Member extends BaseEntity<SingleKey<Long>> {
 
     private String email;
