@@ -32,4 +32,7 @@ public interface OrderService {
 
     // 상품조회 주문
     public Long orderProduct(ProductDto product, Long memberId) throws Exception;
+
+    // 주문 취소
+    public void cancelOrder(SingleKey<Long> key) throws Exception;
 }

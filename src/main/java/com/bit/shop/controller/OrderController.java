@@ -33,7 +33,7 @@ public class OrderController {
 
     // 주문 취소
     public void orderCancel(Long orderId) throws Exception {
-        orderService.remove(new SingleKey<Long>(orderId));
+        orderService.cancelOrder(new SingleKey<Long>(orderId));
     }
 
     // 주문내역 조회

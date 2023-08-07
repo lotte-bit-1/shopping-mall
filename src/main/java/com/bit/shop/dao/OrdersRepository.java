@@ -50,6 +50,9 @@ public class OrdersRepository implements DaoFrame<SingleKey<Long>, Orders> {
                         .status(rSet.getString("status"))
                         .build();
             }
+        } catch (NullPointerException e) {
+            log.info(e.getMessage());
+            throw new Exception("주문 정보가 없음");
         } catch (Exception e) {
             log.info(e.getMessage());
             throw new Exception("주문 조회 에러");

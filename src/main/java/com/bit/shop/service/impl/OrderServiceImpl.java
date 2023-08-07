@@ -79,6 +79,18 @@ public class OrderServiceImpl implements OrderService {
         return ordersRepository.getMembersOrder(memberId).stream().map(OrdersDto::new).collect(Collectors.toList());
     }
 
+    public void cancelOrder(SingleKey<Long> key) throws Exception {
+        Orders orders = ordersRepository.getById(key).orElseThrow();
+        if (orders.getStatus().equals("주문")) {
+            ordersRepository.update(
+                    Orders.builder()
+                            .memberId(orders.getMemberId())
+                            .status("주문 취소")
+                            .build()
+            );
+        }
+    }
+
     @Override
     public Long makeOrder(Long memberId) throws Exception {
         Orders orders = Orders.builder()
