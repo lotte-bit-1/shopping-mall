@@ -1,4 +1,4 @@
-package member;
+package com.bit.shop.member;
 
 import com.bit.shop.dto.MemberResponseDto;
 import com.bit.shop.service.MemberService;

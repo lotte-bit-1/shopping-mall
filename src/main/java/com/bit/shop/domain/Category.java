@@ -7,7 +7,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-@Builder
 public class Category extends BaseEntity<SingleKey<Long>> {
 
     private String name;

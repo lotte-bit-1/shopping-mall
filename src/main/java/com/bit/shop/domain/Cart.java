@@ -7,11 +7,13 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-@Builder
 public class Cart extends BaseEntity<SingleKey<Long>> {
 
     private int productQuantity;
     private Long productId;
     private Long memberId;
 
+    public void setKey(SingleKey<Long> key) {
+        super.key = key;
+    }
 }

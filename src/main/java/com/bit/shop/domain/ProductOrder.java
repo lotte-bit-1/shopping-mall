@@ -13,5 +13,4 @@ public class ProductOrder extends BaseEntity<SingleKey<Long>> {
     private long productId;
     private String name;
     private int level;
-
 }

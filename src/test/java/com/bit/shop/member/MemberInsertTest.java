@@ -1,4 +1,4 @@
-package member;
+package com.bit.shop.member;
 
 import com.bit.shop.domain.Member;
 import com.bit.shop.service.MemberService;

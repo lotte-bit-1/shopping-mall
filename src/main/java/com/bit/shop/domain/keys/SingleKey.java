@@ -6,6 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class SingleKey<ID extends Number> implements EntityKey {
-
     private ID id;
 }
