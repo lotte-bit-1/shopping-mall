@@ -11,8 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 public class Likes extends BaseEntity<CompositeKey<Long>> {
 
-    private final Long memberId;
-    private final Long productId;
+    private Long memberId;
+    private Long productId;
 
     public CompositeKey<Long> getCompositeKey(){
         Map<String,Long> map = new HashMap<>();
