@@ -2,14 +2,12 @@ package com.bit.shop.category;
 
 import com.bit.shop.dao.CategoryRepository;
 import com.bit.shop.domain.Category;
-import com.bit.shop.dto.CategoryDto;
 import com.bit.shop.service.CategoryServiceImpl;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class CategorySelectTest {
 
