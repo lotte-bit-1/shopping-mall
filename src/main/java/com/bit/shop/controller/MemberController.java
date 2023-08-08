@@ -1,45 +1,65 @@
 package com.bit.shop.controller;
 
+import com.bit.shop.domain.Member;
+import com.bit.shop.dto.LoginMember;
+import com.bit.shop.dto.LoginRequestDto;
+import com.bit.shop.dto.MemberResponseDto;
+import com.bit.shop.service.MemberService;
+import com.bit.shop.service.impl.MemberServiceImpl;
+import java.util.HashMap;
+import java.util.Map;
+
 public class MemberController {
 
-//    private MemberService memberService;
-//    private Scanner sc = new Scanner(System.in);
-//
-//    MemberController() {
-//        memberService = new MemberServiceImpl();
-//    }
-//
-//    public void start() {
-//        System.out.println("==============================");
-//        System.out.println("1. 회원가입");
-//        System.out.println("2. 로그인");
-//        System.out.println("3. 나가기");
-//        System.out.println("==============================");
-//        System.out.println("원하는 기능을 입력 해주세요.");
-//        System.out.print("입력 : ");
-//        try {
-//            int inputNum = sc.nextInt();
-//            switch (inputNum) {
-//                case 1:
-//                    doRegister();
-//                    break;
-//                case 2:
-//                    doLogin();
-//                    break;
-//                case 3:
-//                    break;
-//                default:
-//                    return;
-//            }
-//
-//        } catch (InputMismatchException e) {
-//            System.out.println("정해진 숫자를 입력 해주세요.");
-//        }
-//    }
-//
-//    private void doRegister() {
-//    }
-//
-//    private void doLogin() {
-//    }
+    private static final String SUCCESS = "SUCCESS";
+    private static final String FAIL = "FAIL";
+    private MemberService memberService;
+
+    MemberController() {
+        memberService = new MemberServiceImpl();
+    }
+
+    public String memberAdd(Member member) {
+        try {
+            memberService.register(member);
+        } catch (Exception e) {
+            return FAIL;
+        }
+        return SUCCESS;
+    }
+
+    public Map<String, Object> memberDetails(Long id) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            MemberResponseDto memberDto = memberService.findMemberDto(id);
+            result.put("result", SUCCESS);
+            result.put("data", memberDto);
+            return result;
+        } catch (Exception e) {
+            result.put("result", FAIL);
+            return result;
+        }
+    }
+
+    public Map<String, Object> login(LoginRequestDto dto) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            LoginMember loginMember = memberService.login(dto);
+            result.put("result", SUCCESS);
+            result.put("data", loginMember);
+            return result;
+        } catch (Exception e) {
+            result.put("result", FAIL);
+            return result;
+        }
+    }
+
+    public String removeMember(Long id) {
+        try {
+            memberService.removeMember(id);
+            return SUCCESS;
+        } catch (Exception e) {
+            return FAIL;
+        }
+    }
 }
