@@ -10,10 +10,10 @@ import java.util.List;
 
 
 public class CouponController {
-    CouponService couponService;
+     CouponService couponService;
 
     public CouponController() {
-        couponService = new CouponServiceImpl();
+        couponService = CouponServiceImpl.getInstance();
     }
 
     public void giveCoupon(Long userId) throws Exception {

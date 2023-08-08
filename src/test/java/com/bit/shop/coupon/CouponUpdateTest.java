@@ -10,8 +10,9 @@ public class CouponUpdateTest {
     @Test
     @DisplayName("coupon service test")
     void update() throws Exception {
-        CouponService couponService = new CouponServiceImpl();
+        CouponService couponService = CouponServiceImpl.getInstance();
         couponService.useCoupon("name", 1L);
 
     }
+
 }
