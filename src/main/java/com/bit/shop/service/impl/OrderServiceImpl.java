@@ -6,7 +6,10 @@ import com.bit.shop.dao.ProductRepository;
 import com.bit.shop.domain.Orders;
 import com.bit.shop.domain.ProductOrder;
 import com.bit.shop.domain.keys.SingleKey;
-import com.bit.shop.dto.*;
+import com.bit.shop.dto.CouponTypeDto;
+import com.bit.shop.dto.OrderCartDto;
+import com.bit.shop.dto.OrderProductDto;
+import com.bit.shop.dto.OrdersDto;
 import com.bit.shop.service.CouponService;
 import com.bit.shop.service.OrderService;
 import com.bit.shop.type.CouponPolicy;
@@ -26,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
         ordersRepository = new OrdersRepository();
         productRepository = new ProductRepository();
         productOrderRepository = new ProductOrderRepository();
-        couponService = new CouponServiceImpl();
+        couponService = CouponServiceImpl.getInstance();
     }
 
     @Override

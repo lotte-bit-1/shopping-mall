@@ -17,6 +17,12 @@ import java.util.logging.Logger;
 public class CouponRepository implements DaoFrame<SingleKey<Long>, Coupon> {
   ConnectionPool connectionPool;
   Connection connection;
+  private static CouponRepository couponRepository;
+
+  public static CouponRepository getInstance() {
+    if (couponRepository == null) return new CouponRepository();
+    return couponRepository;
+  }
 
   public CouponRepository() {
     try {

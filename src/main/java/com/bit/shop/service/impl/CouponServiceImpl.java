@@ -10,9 +10,16 @@ import java.util.List;
 
 public class CouponServiceImpl implements CouponService {
     CouponRepository repository;
+    private static CouponServiceImpl couponService;
 
-    public CouponServiceImpl() {
-        repository = new CouponRepository();
+    public static CouponServiceImpl getInstance() {
+        if (couponService == null) return new CouponServiceImpl();
+        return couponService;
+    }
+
+
+    private CouponServiceImpl() {
+        repository = CouponRepository.getInstance();
     }
 
     public List<Coupon> getAllCoupon() throws Exception {
